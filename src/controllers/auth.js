@@ -13,7 +13,6 @@ function register(req, res) {
         password: hashPassword,
     });
 
-
     user.save((error,  userStorage) => {
         if (error) {
             res.status(400).send({ mgs: "Erro ao cadastrar usuário"})
@@ -21,6 +20,10 @@ function register(req, res) {
             res.status(201).send(userStorage);
         }
     });
+}
+
+function login(req, res) {
+
 }
 
 export const AuthController  = {
