@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 
+import { jwt } from '../utils/index.js';
 import { User } from '../models/user.js';
 
 function register(req, res) {
@@ -38,11 +39,8 @@ function login(req, res) {
                     res.status(400).send({ mgs: "Usuário ou senha inválidos!"})
                 } else {
                     res.status(200).send({
-                        mgs: "Usuário logado com sucesso!",
-
-                        // TODO: Implementar JWT
-                        // accessToken: userStorage.accessToken,
-                        // refreshToken: userStorage.refreshToken,
+                        accessToken: jwt.createAccessToken(userStorage),
+                        refreshToken: jwt.createRefreshToken(userStorage),
                     })
                 }
             });
@@ -51,7 +49,27 @@ function login(req, res) {
 };
 
 function refreshAccessToken(req, res) {
-    res.status(200).send({ mgs: "Refresh token!"})
+    const { refreshToken } = req.body;
+
+    if (!refreshToken) {
+        res.status(400).send({ mgs: "Token Requerido!" })
+    }
+
+    const hasExpired = jwt.hasExpiredToken(refreshToken);
+    if (hasExpired) {
+        res.status(400).send({ mgs: "Token expirado!" })
+    }
+
+    const { user_id } = jwt.decoded(refreshToken);
+    User.findById(user_id, (error, userStorage) => {
+        if (error) {
+            res.status(500).send({ mgs: "Erro de servidor!"})
+        } else {
+            res.status(200).send({
+                accessToken: jwt.createAccessToken(userStorage)
+            })
+        }
+    });
 }
 
 export const AuthController  = {
