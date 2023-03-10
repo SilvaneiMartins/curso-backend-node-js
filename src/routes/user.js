@@ -4,6 +4,6 @@ import { UserController } from '../controllers/index.js';
 
 const api = express.Router();
 
-// TODO: Implementar as rotas de usuário
+api.get('/user/me', UserController.getMe);
 
 export const userRoutes = api;
