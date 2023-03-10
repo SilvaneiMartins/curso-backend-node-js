@@ -4,6 +4,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 
 import {
+    authRoutes,
     userRoutes,
 } from './routes/index.js';
 
@@ -23,7 +24,7 @@ app.use(cors());
 app.use(morgan('dev'));
 
 // Configuração das rotas
+app.use('/api/v1', authRoutes);
 app.use('/api/v1', userRoutes);
-
 
 export { app }
