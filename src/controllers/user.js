@@ -12,10 +12,44 @@ async function getMe(req, res) {
             return res.status(200).send(response);
         }
     } catch (error) {
-        return res.status(500).send({ msg: 'Erro de Servidor!' });
+        res.status(500).send({ msg: 'Erro de Servidor!' });
     }
-}
+};
+
+async function getAllUsers(req, res) {
+    try {
+        const { user_id } = req.user;
+
+        const response = await User.find({ _id: { $ne: user_id } }).select(["-password", "-__v"]);
+
+        if (!response) {
+            return res.status(400).send({ msg: 'Usuário não encontrado!' });
+        } else {
+            return res.status(200).send(response);
+        }
+    } catch (error) {
+       res.status(500).send({ msg: 'Erro de Servidor!' });
+    }
+};
+
+async function getUserById(req, res) {
+    const { id } = req.params;
+
+    try {
+        const response = await User.findById(id).select(["-password", "-__v"]);
+
+        if (!response) {
+            res.status(400).send({ msg: 'Usuário não encontrado!' });
+        } else {
+            res.status(200).send(response);
+        }
+    } catch (error) {
+        res.status(500).send({ msg: 'Erro de Servidor!' });
+    }
+};
 
 export const UserController = {
     getMe,
+    getUserById,
+    getAllUsers,
 }
