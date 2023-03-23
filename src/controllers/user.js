@@ -1,4 +1,5 @@
 import { User } from '../models/index.js';
+import { getFilePath } from '../utils/index.js';
 
 async function getMe(req, res) {
     const { user_id } = req.user;
@@ -53,7 +54,7 @@ async function updateUser(req, res) {
     const userData = req.body;
 
     if (req.files.avatar) {
-        const imagePath = req.files.avatar;
+        const imagePath = getFilePath(req.files.avatar);
         console.log(imagePath);
     }
 };
