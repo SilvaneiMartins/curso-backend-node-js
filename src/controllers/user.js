@@ -48,8 +48,13 @@ async function getUserById(req, res) {
     }
 };
 
+async function updateUser(req, res) {
+    res.status(200).send({ msg: 'Atualização de Usuário!' });
+};
+
 export const UserController = {
     getMe,
+    updateUser,
     getUserById,
     getAllUsers,
 }
