@@ -49,7 +49,13 @@ async function getUserById(req, res) {
 };
 
 async function updateUser(req, res) {
-    res.status(200).send({ msg: 'Atualização de Usuário!' });
+    const { user_id } = req.user;
+    const userData = req.body;
+
+    if (req.files.avatar) {
+        const imagePath = req.files.avatar;
+        console.log(imagePath);
+    }
 };
 
 export const UserController = {
