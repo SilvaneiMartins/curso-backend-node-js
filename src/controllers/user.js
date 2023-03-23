@@ -55,8 +55,20 @@ async function updateUser(req, res) {
 
     if (req.files.avatar) {
         const imagePath = getFilePath(req.files.avatar);
-        console.log(imagePath);
+        userData.avatar = imagePath;
     }
+
+    User.findByIdAndUpdate({ _id: user_id}, userData, { new: true }, (error, userUpdated) => {
+        if (error) {
+            res.status(500).send({ msg: 'Erro de Servidor!' });
+        } else {
+            if (!userUpdated) {
+                return res.status(400).send({ msg: 'Erro ao atualizar o usuário!' });
+            } else {
+                return res.status(200).send(userUpdated);
+            }
+        }
+    });
 };
 
 export const UserController = {
