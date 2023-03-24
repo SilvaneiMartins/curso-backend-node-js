@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import {
     authRoutes,
     userRoutes,
+    productRoutes,
 } from './routes/index.js';
 
 const app = express();
@@ -26,5 +27,6 @@ app.use(morgan('dev'));
 // Configuração das rotas
 app.use('/api/v1', authRoutes);
 app.use('/api/v1', userRoutes);
+app.use('/api/v1', productRoutes);
 
 export { app }
