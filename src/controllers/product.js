@@ -36,7 +36,19 @@ async function getAllProducts(req, res) {
 };
 
 async function getProductById(req, res) {
-    return res.status(200).send({ msg: 'Buscar Produto por ID!' });
+    const { id } = req.params;
+
+    try {
+        const response = await Product.findById(id).select(["-__v"]);
+
+        if (!response) {
+            res.status(400).send({ msg: 'Produto não encontrado!' });
+        } else {
+            res.status(200).send(response);
+        }
+    } catch (error) {
+        res.status(500).send({ msg: 'Error de servidor!' });
+    }
 };
 
 export const ProductsController = {
