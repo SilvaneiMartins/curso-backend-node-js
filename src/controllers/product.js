@@ -20,8 +20,14 @@ function createProduct(req, res) {
     });
 };
 
-function getAllProducts(req, res) {
-    res.status(200).send({ msg: 'Buscar todos os Produtos!' });
+async function getAllProducts(req, res) {
+    try {
+        const { _id } = req.body;
+        const products = await Product.find({ _id: { $ne: _id } }).select(["-__v"]);
+
+    } catch (error) {
+        return res.status(500).send({ msg: 'Error de servidor!' });
+    }
 }
 
 export const ProductsController = {
