@@ -18,8 +18,13 @@ function createProduct(req, res) {
             return res.status(201).send(productStored);
         }
     });
+};
+
+function getAllProducts(req, res) {
+    res.status(200).send({ msg: 'Buscar todos os Produtos!' });
 }
 
 export const ProductsController = {
     createProduct,
+    getAllProducts,
 }

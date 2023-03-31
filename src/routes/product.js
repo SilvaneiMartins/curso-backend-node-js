@@ -7,5 +7,6 @@ import { ProductsController } from "../controllers/index.js";
 const api = express.Router();
 
 api.post("/product", [mdAuth.asureAuth], ProductsController.createProduct);
+api.get("/products", [mdAuth.asureAuth], ProductsController.getAllProducts);
 
 export const productRoutes = api;
