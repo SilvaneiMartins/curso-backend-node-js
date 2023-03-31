@@ -33,9 +33,14 @@ async function getAllProducts(req, res) {
     } catch (error) {
         return res.status(500).send({ msg: 'Error de servidor!' });
     }
-}
+};
+
+async function getProductById(req, res) {
+    return res.status(200).send({ msg: 'Buscar Produto por ID!' });
+};
 
 export const ProductsController = {
     createProduct,
     getAllProducts,
+    getProductById,
 }
