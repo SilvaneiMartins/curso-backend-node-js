@@ -10,6 +10,14 @@ function createProduct(req, res) {
         price,
         quantity,
     });
+
+    product.save((error, productStored) => {
+        if (error)  {
+            return res.status(500).send({ msg: 'Error de servidor!' });
+        } else {
+            return res.status(201).send(productStored);
+        }
+    });
 }
 
 export const ProductsController = {
