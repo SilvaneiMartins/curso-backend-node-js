@@ -51,8 +51,13 @@ async function getProductById(req, res) {
     }
 };
 
+async function updateProduct(req, res) {
+    return res.status(200).send({ msg: 'Atualizar produto!' });
+};
+
 export const ProductsController = {
     createProduct,
+    updateProduct,
     getAllProducts,
     getProductById,
 }
